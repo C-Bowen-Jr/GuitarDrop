@@ -16,7 +16,8 @@ from enum import IntEnum
 
 # Global Variables
 NOTES = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
-DISPLAYSURF = pygame.display.set_mode((1080,640))
+DISPLAYSURF = pygame.Surface((1080,640))
+SCREEN = pygame.display.set_mode((2160,1280))
 FRETTINGSPOTS = pygame.Surface((1080,640))
 BLACK = (30,30,30)
 BROWN = (200,90,50)
@@ -168,7 +169,7 @@ def drawScaleMarkers():
 def main():
     # Personal Init features
     # Defines
-    global CurrentKey, CurrentScale, CurrentScaleNotes, Frets
+    global CurrentKey, CurrentScale, CurrentScaleNotes, Frets, DISPLAYSURF
     FramePerSec = pygame.time.Clock()
     Redraw = True
     DisplayScaleMarkers = True
@@ -278,7 +279,8 @@ def main():
         DISPLAYSURF.blit(textRender("Press space to toggle position dots",WHITE), (70,260))
         DISPLAYSURF.blit(textRender("Press M for Natural Minor, +Shift for Major, +Alt for Melodic Minor", WHITE), (70,280))
         DISPLAYSURF.blit(textRender("Press 1-6 to drop a string's tuning, +Shift to raise instead", WHITE), (70, 300))
-        pygame.display.update()
+        SCREEN.blit(pygame.transform.scale(DISPLAYSURF, (2160,1280)), (0,0))
+        pygame.display.flip()
         FramePerSec.tick(30)
     
 if __name__ == '__main__':
