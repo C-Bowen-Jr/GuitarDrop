@@ -4,10 +4,11 @@
 # This is a project similar to chordfinder's scale -> note. The main difference
 # is the added feature of alternate tuning adjustments and mabe improved readability
 
-Version = "0.0.6"
+Version = "0.0.8"
 
 import pygame
 from pygame.locals import *
+import sys
 import configparser
 from ast import literal_eval
 from dataclasses import dataclass
@@ -189,11 +190,12 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                #sys.exit()
+                sys.exit(0)
             mods_pressed = pygame.key.get_mods()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
+                    sys.exit(0)
                 if event.key == pygame.K_a:
                     CurrentKey = "A"
                 if event.key == pygame.K_b:
@@ -220,7 +222,7 @@ def main():
                         TuneString(1, Tune.UP)
                     else:
                         TuneString(1, Tune.DOWN)
-                if event.key == pygame.K_3:
+                if event.key == pygame.K_3 and not mods_pressed & pygame.KMOD_ALT:
                     if mods_pressed & pygame.KMOD_SHIFT:
                         TuneString(2, Tune.UP)
                     else:
@@ -241,15 +243,15 @@ def main():
                     else:
                         TuneString(5, Tune.DOWN)
                 if event.key == pygame.K_m:
-                    if pygame.key.get_mods() & pygame.KMOD_ALT:
+                    if mods_pressed & pygame.KMOD_ALT:
                         CurrentScale = "Melodic Minor"
-                    elif pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                    elif mods_pressed & pygame.KMOD_SHIFT:
                         CurrentScale = "Major"
                     else:
                         CurrentScale = "Natural Minor"
                 if event.key == pygame.K_LSHIFT:
                     CurrentScale = "Major"
-                if event.key == pygame.K_3: # 3 is where sharp/pound/hash is
+                if event.key == pygame.K_3 and mods_pressed & pygame.KMOD_ALT: # 3 is where sharp/pound/hash is
                     if "#" in getNote(CurrentKey,0,1): # If the next note is can be sharped
                         CurrentKey = getNote(CurrentKey,0,1)
                         
@@ -275,7 +277,7 @@ def main():
         DISPLAYSURF.blit(textRender("Press 3 to change to sharp", WHITE), (70,240))
         DISPLAYSURF.blit(textRender("Press space to toggle position dots",WHITE), (70,260))
         DISPLAYSURF.blit(textRender("Press M for Natural Minor, +Shift for Major, +Alt for Melodic Minor", WHITE), (70,280))
-        DISPLAYSURF.blit(textRender("Press 1-6 to drop a string's tuning, +Shift to raise instead"))
+        DISPLAYSURF.blit(textRender("Press 1-6 to drop a string's tuning, +Shift to raise instead", WHITE), (70, 300))
         pygame.display.update()
         FramePerSec.tick(30)
     
