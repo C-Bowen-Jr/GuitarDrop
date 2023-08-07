@@ -8,6 +8,9 @@ Guitar Drop is used to display root and regular notes in a scale displayed
 on a fretboard. You can change a few things to get what you're in need of. 
 Pressing 
 
+## Preview
+![screenshot of version 0.1.9](guitardrop_v_0-1-9.png "Example of output V.0.1.9")
+
 ## Getting Started
 
 ### Dependencies

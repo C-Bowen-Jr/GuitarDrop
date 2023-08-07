@@ -4,7 +4,7 @@
 # This is a project similar to chordfinder's scale -> note. The main difference
 # is the added feature of alternate tuning adjustments and mabe improved readability
 
-Version = "0.0.8"
+Version = "0.1.9"
 
 import pygame
 from pygame.locals import *
